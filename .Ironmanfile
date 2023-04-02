@@ -1,0 +1,29 @@
+version: 0
+database:
+  driver: mysql
+  conn: ""
+  dir: ""
+enable_notification: true
+params:
+  service_name: mysql
+  service_name_pascal_case: Mysql
+  service_name_camel_case: mysql
+  service_name_snake_case: mysql
+  db: ""
+  grpc: false
+  app_package: go-template
+  app_path: /gen/go-template
+  tool_box_package: go-template/pkg
+  model: ""
+  model_lower: ""
+  model_snake_case_as_table_name: ""
+  suffix: ""
+  model_declaration: ""
+  enum_declaration: ""
+  has_string_id: false
+  has_trigger_upsert: false
+  has_database: false
+  has_relational_database: false
+  postgres: false
+  mysql: false
+  mongo: false
