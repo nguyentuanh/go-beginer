@@ -13,7 +13,8 @@ import (
 
 	"go-template/internal/app-api/handler/health"
 	homehandler "go-template/internal/app-api/handler/home"
-	"go-template/internal/app-api/handler/users"
+	postshandler "go-template/internal/app-api/handler/posts"
+	userhandler "go-template/internal/app-api/handler/users"
 	"go-template/internal/middleware"
 	"go-template/pkg/l"
 )
@@ -70,22 +71,6 @@ func (o Server) InitHealth(healthHandler health.Controller) {
 	o.r.Get("/liveness", healthHandler.Liveness)
 }
 
-func (o Server) InitRouter(usersHandler users.Controller) {
-	// User router
-	o.r.Get("/users", usersHandler.GetAllUser)
-	o.r.Post("/users", usersHandler.CreateUser)
-	o.r.Get("/users/:id", usersHandler.GetUserById)
-	o.r.Put("/users/:id", usersHandler.UpdateUser)
-	o.r.Delete("/users/:id", usersHandler.DeleteUser)
-
-	// Post router
-	// o.r.Get("/users/:id/posts", controller.GetPostsOfUser)
-	// o.r.Post("/users/:id/posts", controller.CreatePost)
-	// o.r.Get("/users/:id/posts/:postId", controller.GetPostDetail)
-	// o.r.Put("/users/:id/posts/:postId", controller.UpdatePost)
-	// o.r.Delete("/users/:id/posts/:postId", controller.DeletePost)
-}
-
 // InitMetrics ...
 func (o Server) InitMetrics() {
 	prometheus := fiberprometheus.New("go-template")
@@ -104,4 +89,24 @@ func (o Server) InitHome() {
 	homeHandler := homehandler.New()
 	w := o.r.Group("/home")
 	w.Get("/index", homeHandler.Index)
+
+}
+
+// InitRouter
+func (o Server) InitRouter() {
+	// User router
+	usersHandler := userhandler.New()
+	o.r.Get("/users", usersHandler.GetAllUser)
+	o.r.Post("/users", usersHandler.CreateUser)
+	o.r.Get("/users/:id", usersHandler.GetUserById)
+	o.r.Put("/users/:id", usersHandler.UpdateUser)
+	o.r.Delete("/users/:id", usersHandler.DeleteUser)
+
+	// Post router
+	postsHandler := postshandler.New()
+	o.r.Get("/users/:id/posts", postsHandler.GetPostsOfUser)
+	o.r.Post("/users/:id/posts", postsHandler.CreatePost)
+	o.r.Get("/users/:id/posts/:postId", postsHandler.GetPostDetail)
+	o.r.Put("/users/:id/posts/:postId", postsHandler.UpdatePost)
+	o.r.Delete("/users/:id/posts/:postId", postsHandler.DeletePost)
 }

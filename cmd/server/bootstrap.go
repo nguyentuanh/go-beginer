@@ -5,6 +5,7 @@ import (
 
 	"go-template/config"
 	"go-template/internal/app-api/handler/health"
+	"go-template/internal/repository"
 	"go-template/pkg/container"
 	handleossignal "go-template/pkg/handle-os-signal"
 )
@@ -22,6 +23,7 @@ func bootstrap(cfg *config.Config) {
 
 	// region register Repository - db
 	// - init db connection
+	repository.ConnectDatabase()
 	//endregion
 
 	// region register Repository - redis

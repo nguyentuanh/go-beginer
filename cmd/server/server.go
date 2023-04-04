@@ -25,6 +25,7 @@ func registerHttpServer(cfg *config.Config) {
 	gw.InitLogHandler()
 	gw.InitMetrics()
 	gw.InitHome()
+	gw.InitRouter()
 	ll.Info("HTTP server start listening", l.Any("HTTP address", cfg.GetHTTPAddress()))
 	err := gw.Listen(cfg.GetHTTPAddress())
 	if err != nil {

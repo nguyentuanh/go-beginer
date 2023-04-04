@@ -8,7 +8,8 @@ import (
 )
 
 func Test_MockData(t *testing.T) {
-	repository.ConnectDatabase()
+	db := repository.ConnectDatabase()
 	err := repository.MockData()
+	defer db.Close()
 	assert.Nil(t, err)
 }
